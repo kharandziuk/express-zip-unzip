@@ -8,17 +8,17 @@ describe('server', () => {
   it('zip-unzip', async () => {
     let response = await S(app)
       .post('/zip')
-      .send(Buffer.from('some data', 'utf8'))
+      .send('Something important')
       .responseType('blob')
     expect(response.statusCode).eql(200)
 
     response = await S(app)
       .post('/unzip')
-      .send(Buffer.from(response.body, 'utf8'))
+      .send(response.body)
       .responseType('blob')
 
     expect(response.statusCode).eql(200)
-    expect(response.body.toString()).eql('some data')
+    expect(response.body.toString()).eql('Something important')
   })
 
   it('unzip non-sence', async () => {
